@@ -1,0 +1,60 @@
+import { Link, useNavigate } from "react-router-dom";
+import { CgProfile } from "react-icons/cg";
+import { useContext, useState } from "react";
+import { AccountContext } from "../context/AccountContext";
+
+function AccountImg() {
+  const { fname, lname, handleSignOut } = useContext(AccountContext);
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+
+  return (
+    <>
+      <CgProfile
+        onClick={handleOpen}
+        className="text-white text-4xl hover:text-blue-700"
+      />
+      <div className="relative">
+        <div className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
+          <div className="w-60 flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
+            {open ? (
+              <div class="p-4">
+                <ul className="font-semibold text-gray-900">
+                  <li className="mt-1 text-gray-600">
+                    <label>
+                      Welcome: {fname} {lname}
+                    </label>
+                  </li>
+                  <li className="mt-1 text-gray-600">
+                    <label>Balance : 0</label>
+                  </li>
+                  <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50 mt-5">
+                    <li className="menu-item">
+                      <Link className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100">
+                        Edit profile
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleSignOut}
+                        className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
+                      >
+                        Sign Out
+                      </button>
+                    </li>
+                  </div>
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default AccountImg;

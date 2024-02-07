@@ -11,6 +11,7 @@ import { fetchCategories } from "./store/thunks/fetchCategories";
 import { useEffect } from "react";
 import Cart from "./components/Cart";
 import { ShoppingCartProvider } from "./context/ShoppingCartContext";
+import CheckOut from "./components/CheckOut";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
           <Route path="*" element={<NoMatch />}></Route>
           <Route path="profile" element={<Profile />}></Route>
           <Route path="products" element={<Products />}></Route>
+          <Route path="checkout" element={<CheckOut />}></Route>
         </Routes>
       </ShoppingCartProvider>
     </>

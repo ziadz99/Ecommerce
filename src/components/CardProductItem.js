@@ -35,8 +35,12 @@ export default function CardProductItem({
                     </Typography>
                   </div>
                   <img src={item.Image} alt={item.Image}></img>
-                  <Typography variant="h6" color="blue-gray" className="mb-2">
-                    {item.Price}
+                  <Typography
+                    variant="h6"
+                    color="blue-gray"
+                    className="mb-2  flex items-center"
+                  >
+                    {item.Price} LE
                   </Typography>
                 </div>
               </CardBody>
@@ -51,7 +55,7 @@ export default function CardProductItem({
                 >
                   -
                 </Button>
-                <Button className="text-black">{item.quantity}</Button>
+                <Button className="text-black bg-white">{item.quantity}</Button>
                 <Button
                   onClick={() => {
                     addCartItem(item);

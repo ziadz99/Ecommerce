@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import CardProductItem from "./CardProductItem";
 import { ShoppingCartContext } from "../context/ShoppingCartContext";
+import { Link } from "react-router-dom";
 
 const Cart = ({ children }) => {
   const {
@@ -117,15 +118,19 @@ const Cart = ({ children }) => {
               {!shoppingCart.length ? (
                 <p className="text-center mt-5 mb-5 ">Your Cart is empty</p>
               ) : (
-                <p className="text-left mt-5 font-extrabold ">
+                <p className="text-left mt-5 mb-5 font-extrabold ">
                   Total: {calcSum(shoppingCart)}
                 </p>
               )}
               <div>
                 {shoppingCart.length > 0 ? (
-                  <button className="text-white bg-black rounded py-2 px-28 hover:bg-slate-800 mt-5">
+                  <Link
+                    to="/checkout"
+                    onClick={toggleMenu}
+                    className="text-white bg-black rounded py-2 px-28 hover:bg-slate-800"
+                  >
                     Check Out
-                  </button>
+                  </Link>
                 ) : (
                   <div class="flex justify-center items-center">
                     <button

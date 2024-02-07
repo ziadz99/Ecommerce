@@ -1,10 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ShoppingCartContext } from "../context/ShoppingCartContext";
 
 function CheckOut() {
   const { shoppingCart } = useContext(ShoppingCartContext);
+  const [selectedGovernorate, setSelectedGovernorate] = useState("");
+
+  const handleSelectChange = (event) => {
+    setSelectedGovernorate(event.target.value);
+  };
   return (
     <>
       <div className="flex flex-col items-center border-b bg-white py-4 sm:flex-row sm:px-10 lg:px-20 xl:px-32">
@@ -94,15 +99,18 @@ function CheckOut() {
             return (
               <>
                 <div className="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
-                  <div className="flex flex-col rounded-lg bg-white sm:flex-row"></div>
-                  <img
-                    className="m-2 h-24 w-28 rounded-md border object-cover object-center"
-                    src={item.Image}
-                    alt=""
-                  />
-                  <div className="flex w-full flex-col px-4 py-4">
-                    <span className="font-semibold">{item.Name}</span>
-                    <p className="text-lg font-bold">{item.Price} EGP</p>
+                  <div className="flex flex-row rounded-lg bg-white sm:flex-row">
+                    <img
+                      className="m-2 h-20 w-20 rounded-md border object-cover object-center"
+                      src={item.Image}
+                      alt=""
+                    />
+                    <div className="flex w-full flex-row px-4 py-2 justify-center items-center">
+                      <span className="font-semibold">{item.Name}</span>
+                      <span className="font-semibold ml-5">
+                        {item.Price} EGP
+                      </span>
+                    </div>
                   </div>
                 </div>
               </>
@@ -114,119 +122,157 @@ function CheckOut() {
           <p className="text-gray-400">
             Complete your order by providing your payment details.
           </p>
-          <div className="">
-            <div className="flex">
-              <input
-                type="text"
-                id="fname"
-                name="fname"
-                className="w-full rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                placeholder="First name"
-              />
-              <input
-                type="text"
-                id="lname"
-                name="lname"
-                className="w-full rounded-md border border-gray-200 px-4 py-3 ml-5 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                placeholder="Last name"
-              />
-            </div>
-            <div className="relative"></div>
-            <label
-              for="card-no"
-              className="mt-4 mb-2 block text-sm font-medium"
-            >
-              Card Details
-            </label>
-            <div className="flex">
-              <div className="relative w-7/12 flex-shrink-0">
-                <input
-                  type="text"
-                  id="card-no"
-                  name="card-no"
-                  className="w-full rounded-md border border-gray-200 px-2 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="xxxx-xxxx-xxxx-xxxx"
-                />
-                <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                  <svg
-                    className="h-4 w-4 text-gray-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M11 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1z" />
-                    <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm13 2v5H1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm-1 9H2a1 1 0 0 1-1-1v-1h14v1a1 1 0 0 1-1 1z" />
-                  </svg>
-                </div>
-              </div>
-              <input
-                type="text"
-                name="credit-expiry"
-                className="w-full rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                placeholder="MM/YY"
-              />
-              <input
-                type="password"
-                name="credit-cvc"
-                maxLength={3}
-                className="w-1/6 flex-shrink-0 rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                placeholder="CVC"
-              />
-            </div>
-            <label
-              for="billing-address"
-              className="mt-4 mb-2 block text-sm font-medium"
-            >
-              Billing Address
-            </label>
-            <div className="flex flex-col sm:flex-row">
-              <div className="relative flex-shrink-0 sm:w-7/12">
-                <input
-                  type="text"
-                  id="billing-address"
-                  name="billing-address"
-                  className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="Street Address"
-                />
-                <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                  <img
-                    className="h-4 w-4 object-contain"
-                    src="https://flagpack.xyz/_nuxt/4c829b6c0131de7162790d2f897a90fd.svg"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <select
-                type="text"
-                name="billing-state"
-                className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-              >
-                <option value="State">State</option>
-              </select>
-              <input
-                type="text"
-                name="billing-zip"
-                className="flex-shrink-0 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none sm:w-1/6 focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                placeholder="ZIP"
-              />
-            </div>
+          <div className="flex">
+            <input
+              type="text"
+              id="fname"
+              name="fname"
+              className="w-full rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="First name"
+            />
+            <input
+              type="text"
+              id="lname"
+              name="lname"
+              className="w-full rounded-md border border-gray-200 px-4 py-3 ml-5 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="Last name"
+            />
+          </div>
 
-            <div className="mt-6 border-t border-b py-2">
-              <div className="flex items-center justify-between">
-                <p className="text-sm font-medium text-gray-900">Subtotal</p>
-                <p className="font-semibold text-gray-900">$399.00</p>
-              </div>
-              <div className="flex items-center justify-between">
-                <p className="text-sm font-medium text-gray-900">Shipping</p>
-                <p className="font-semibold text-gray-900">$8.00</p>
+          <div className="mt-3">
+            <input
+              type="text"
+              id="address"
+              name="address"
+              className="w-full rounded-md border border-gray-200  py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="Address"
+            />
+          </div>
+          <div className="flex mt-5">
+            <input
+              type="text"
+              id="city"
+              name="city"
+              className="w-full rounded-md border border-gray-200 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="City"
+            />
+            <div className="ml-2">
+              <select
+                className=" rounded-md border-gray-200 py-3 text-sm shadow-sm"
+                id="governorateDropdown"
+                value={selectedGovernorate}
+                onChange={handleSelectChange}
+              >
+                <option value="" disabled selected hidden>
+                  Governorate
+                </option>
+                <option value="Alexandria">Alexandria</option>
+                <option value="Cairo">Cairo</option>
+                {/* Add more options as needed */}
+              </select>
+            </div>
+            <input
+              type="text"
+              id="psc"
+              name="psc"
+              className="w-full rounded-md border border-gray-200 px-4 py-3 ml-5 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="Postal Code"
+            />
+          </div>
+          <div className="mt-5 ">
+            <h1>Payment</h1>
+          </div>
+          <label for="card-no" className="mt-4 mb-2 block text-sm font-medium">
+            Card Details
+          </label>
+          <div className="flex">
+            <div className="relative w-7/12 flex-shrink-0">
+              <input
+                type="text"
+                id="card-no"
+                name="card-no"
+                className="w-full rounded-md border border-gray-200 px-2 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                placeholder="xxxx-xxxx-xxxx-xxxx"
+              />
+              <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+                <svg
+                  className="h-4 w-4 text-gray-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M11 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1z" />
+                  <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm13 2v5H1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm-1 9H2a1 1 0 0 1-1-1v-1h14v1a1 1 0 0 1-1 1z" />
+                </svg>
               </div>
             </div>
-            <div className="mt-6 flex items-center justify-between">
-              <p className="text-sm font-medium text-gray-900">Total</p>
-              <p className="text-2xl font-semibold text-gray-900">$408.00</p>
+            <input
+              type="text"
+              name="credit-expiry"
+              className="w-full rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="MM/YY"
+            />
+            <input
+              type="password"
+              name="credit-cvc"
+              maxLength={3}
+              className="w-1/6 flex-shrink-0 rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="CVC"
+            />
+          </div>
+          <label
+            for="billing-address"
+            className="mt-4 mb-2 block text-sm font-medium"
+          >
+            Billing Address
+          </label>
+          <div className="flex flex-col sm:flex-row">
+            <div className="relative flex-shrink-0 sm:w-7/12">
+              <input
+                type="text"
+                id="billing-address"
+                name="billing-address"
+                className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                placeholder="Street Address"
+              />
+              <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+                <img
+                  className="h-4 w-4 object-contain"
+                  src="https://flagpack.xyz/_nuxt/4c829b6c0131de7162790d2f897a90fd.svg"
+                  alt=""
+                />
+              </div>
             </div>
+            <select
+              type="text"
+              name="billing-state"
+              className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+            >
+              <option value="State">State</option>
+            </select>
+            <input
+              type="text"
+              name="billing-zip"
+              className="flex-shrink-0 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none sm:w-1/6 focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="ZIP"
+            />
+          </div>
+
+          <div className="mt-6 border-t border-b py-2">
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-medium text-gray-900">Subtotal</p>
+              <p className="font-semibold text-gray-900">$399.00</p>
+            </div>
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-medium text-gray-900">Shipping</p>
+              <p className="font-semibold text-gray-900">$8.00</p>
+            </div>
+          </div>
+          <div className="mt-6 flex items-center justify-between">
+            <p className="text-sm font-medium text-gray-900">Total</p>
+            <p className="text-2xl font-semibold text-gray-900">$408.00</p>
           </div>
           <button className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
             Place Order

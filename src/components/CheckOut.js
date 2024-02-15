@@ -6,10 +6,15 @@ import { ShoppingCartContext } from "../context/ShoppingCartContext";
 function CheckOut() {
   const { shoppingCart } = useContext(ShoppingCartContext);
   const [selectedGovernorate, setSelectedGovernorate] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
 
   const handleSelectChange = (event) => {
     setSelectedGovernorate(event.target.value);
   };
+  const handleRadioChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
+
   return (
     <>
       <div className="flex flex-col items-center border-b bg-white py-4 sm:flex-row sm:px-10 lg:px-20 xl:px-32">
@@ -179,13 +184,33 @@ function CheckOut() {
               placeholder="Postal Code"
             />
           </div>
-          <div className="mt-5 ">
-            <h1>Payment</h1>
+          <div className="flex mt-2">
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              className="w-full rounded-md border border-gray-200 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="Phone"
+            />
           </div>
-          <label for="card-no" className="mt-4 mb-2 block text-sm font-medium">
-            Card Details
-          </label>
-          <div className="flex">
+          <div className="mt-5 mb-2">
+            <h1 className="font-bold text-3xl">Payment</h1>
+          </div>
+          <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+            <input
+              id="cards"
+              type="radio"
+              value="cards"
+              name="bordered-radio"
+              onChange={handleRadioChange}
+              checked={selectedValue === "cards"}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600"
+            />
+            <label for="cards" className="w-full py-4 ms-2 text-sm font-medium">
+              Pay with Credit/Debit Card
+            </label>
+          </div>
+          <div className={selectedValue === "cards" ? "flex" : "hidden"}>
             <div className="relative w-7/12 flex-shrink-0">
               <input
                 type="text"
@@ -222,57 +247,34 @@ function CheckOut() {
               placeholder="CVC"
             />
           </div>
-          <label
-            for="billing-address"
-            className="mt-4 mb-2 block text-sm font-medium"
-          >
-            Billing Address
-          </label>
-          <div className="flex flex-col sm:flex-row">
-            <div className="relative flex-shrink-0 sm:w-7/12">
-              <input
-                type="text"
-                id="billing-address"
-                name="billing-address"
-                className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                placeholder="Street Address"
-              />
-              <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                <img
-                  className="h-4 w-4 object-contain"
-                  src="https://flagpack.xyz/_nuxt/4c829b6c0131de7162790d2f897a90fd.svg"
-                  alt=""
-                />
-              </div>
-            </div>
-            <select
-              type="text"
-              name="billing-state"
-              className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-            >
-              <option value="State">State</option>
-            </select>
+          <div className="mt-2 flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
             <input
-              type="text"
-              name="billing-zip"
-              className="flex-shrink-0 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none sm:w-1/6 focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-              placeholder="ZIP"
+              id="cod"
+              type="radio"
+              value="cod"
+              name="bordered-radio"
+              onChange={handleRadioChange}
+              checked={selectedValue === "cod"}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600"
             />
+            <label for="cards" className="w-full py-4 ms-2 text-sm font-medium">
+              Cash on Delivery (CoD)
+            </label>
           </div>
 
           <div className="mt-6 border-t border-b py-2">
             <div className="flex items-center justify-between">
               <p className="text-sm font-medium text-gray-900">Subtotal</p>
-              <p className="font-semibold text-gray-900">$399.00</p>
+              <p className="font-semibold text-gray-900">399.00 EGP</p>
             </div>
             <div className="flex items-center justify-between">
               <p className="text-sm font-medium text-gray-900">Shipping</p>
-              <p className="font-semibold text-gray-900">$8.00</p>
+              <p className="font-semibold text-gray-900">25.00 EGP</p>
             </div>
           </div>
           <div className="mt-6 flex items-center justify-between">
             <p className="text-sm font-medium text-gray-900">Total</p>
-            <p className="text-2xl font-semibold text-gray-900">$408.00</p>
+            <p className="text-2xl font-semibold text-gray-900">408.00 EGP</p>
           </div>
           <button className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
             Place Order

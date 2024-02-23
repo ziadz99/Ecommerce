@@ -11,10 +11,11 @@ const Cart = ({ children }) => {
     decItemQuantitiy,
     removeCartItem,
     calcSum,
+    getCartItemQuantity,
   } = useContext(ShoppingCartContext);
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [total, setTotal] = useState(0);
-  const [cartCounter, setCartCounter] = useState(0);
+  // const [total, setTotal] = useState(0);
+  // const [cartCounter, setCartCounter] = useState(0);
   const offCanvasRef = useRef(null);
   // const { shoppingCart } = useContext(ShoppingCartContext);
 
@@ -66,12 +67,10 @@ const Cart = ({ children }) => {
   // console.log(shoppingCart);
   // console.log(calcSum(shoppingCart));
 
-  console.log(shoppingCart.item);
-
   return (
     <div className="flex">
       <div
-        className={`flex-grow p-2 overflow-y-auto font-bold ${
+        className={`flex-grow p-1 overflow-y-auto font-bold ${
           isMenuOpen ? "overflow-hidden" : ""
         }`}
       >
@@ -80,12 +79,13 @@ const Cart = ({ children }) => {
           onClick={toggleMenu}
         >
           <FiShoppingCart />
-          {/* {shoppingCart.length > 0 && (
-            <p className="bg-red-500 text-white rounded-full w-5 h-5 bottom-0 right-1 text-xs flex items-center justify-center">
-              {shoppingCart.length}
+          {shoppingCart.length > 0 && (
+            <p className="absolute top-0 right-0 transform translate-y-1 z-10 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
+              {getCartItemQuantity()}
             </p>
-          )} */}
+          )}
         </button>
+
         {children}
 
         {/* Offcanvas Component */}
@@ -94,34 +94,33 @@ const Cart = ({ children }) => {
             <div
               onClick={toggleMenu}
               className="fixed inset-0 z-50 bg-black bg-opacity-50"
-            >
-              {" "}
-            </div>
+            ></div>
             <div
               ref={offCanvasRef}
               className="fixed inset-y-0 right-0 overflow-y-scroll w-96 z-50 bg-white p-4 shadow-md"
+              // className='fixed inset-y-0 right-0 w-96 z-50 bg-white p-4 shadow-md'
             >
               <h3 className="text-2xl font-semibold mb-4">Shopping Cart</h3>
-              <p className="mb-2 text-md">{shoppingCart.length} Items</p>
-              {shoppingCart && (
-                <>
-                  <CardProductItem
-                    shoppingCart={shoppingCart}
-                    addCartItem={addCartItem}
-                    decItemQuantitiy={decItemQuantitiy}
-                    removeCartItem={removeCartItem}
-                    total={total}
-                    setTotal={setTotal}
-                  />
-                </>
-              )}
-              {!shoppingCart.length ? (
-                <p className="text-center mt-5 mb-5 ">Your Cart is empty</p>
-              ) : (
-                <p className="text-left mt-5 mb-5 font-extrabold ">
-                  Total: {calcSum(shoppingCart)}
-                </p>
-              )}
+              <p className="mb-2 text-md">{getCartItemQuantity()} Items</p>
+              <div>
+                {shoppingCart && (
+                  <>
+                    <CardProductItem
+                      shoppingCart={shoppingCart}
+                      addCartItem={addCartItem}
+                      decItemQuantitiy={decItemQuantitiy}
+                      removeCartItem={removeCartItem}
+                    />
+                  </>
+                )}
+                {!shoppingCart.length ? (
+                  <p className="text-center mt-5 mb-5 ">Your Cart is empty</p>
+                ) : (
+                  <p className="text-left mt-5 mb-5 font-extrabold ">
+                    Total: {calcSum(shoppingCart)}
+                  </p>
+                )}
+              </div>
               <div>
                 {shoppingCart.length > 0 ? (
                   <Link

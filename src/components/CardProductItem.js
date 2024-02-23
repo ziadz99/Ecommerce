@@ -12,10 +12,7 @@ export default function CardProductItem({
   addCartItem,
   decItemQuantitiy,
   removeCartItem,
-  total,
-  setTotal,
 }) {
-  const totalPrice = 0;
   // console.log(shoppingCart);
   return (
     <>

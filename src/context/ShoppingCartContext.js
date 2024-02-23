@@ -81,6 +81,17 @@ export const ShoppingCartProvider = ({ children }) => {
     return acc;
   };
 
+  const getCartItemQuantity = () => {
+    let quantity = 0;
+
+    shoppingCart.map((item, index) => {
+      quantity += item.quantity;
+      return quantity;
+    });
+
+    return quantity;
+  };
+
   const value = {
     addCartItem,
     shoppingCart,
@@ -88,6 +99,7 @@ export const ShoppingCartProvider = ({ children }) => {
     decItemQuantitiy,
     removeCartItem,
     calcSum,
+    getCartItemQuantity,
   };
 
   return (

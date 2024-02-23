@@ -2,12 +2,14 @@ import { Link } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
 import AccountImg from "./AccountImg";
 import { AccountContext } from "../context/AccountContext";
+import { ShoppingCartContext } from "../context/ShoppingCartContext";
 import { useContext, useEffect, useState } from "react";
 import Cart from "./Cart";
 import Login from "./Login";
 
 export const Navbar = () => {
   const { token } = useContext(AccountContext);
+  const { shoppingCart, getCartItemQuantity } = useContext(ShoppingCartContext);
 
   const [userAuth, setUserAuth] = useState(<Login />);
   // let userAuth;
@@ -32,23 +34,25 @@ export const Navbar = () => {
             E-Commerce
           </span>
         </Link>
-        <div className="flex md:order-2 ">
-          <div>{userAuth}</div>
-          {/* {!token && (
+        <>
+          <div className="flex md:order-2 ">
+            <div>{userAuth}</div>
+            {/* {!token && (
             <div>
               <Login />
             </div>
           )} */}
 
-          {/* {token && (
+            {/* {token && (
             <div>
               <AccountImg />
             </div>
           )} */}
-          <div className="ml-5">
-            <Cart />
+            <div className="ml-5 relative">
+              <Cart />
+            </div>
           </div>
-        </div>
+        </>
         <div
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-sticky"

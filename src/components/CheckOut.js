@@ -4,30 +4,23 @@ import { useContext, useState } from "react";
 import { ShoppingCartContext } from "../context/ShoppingCartContext";
 import FormTextField from "./FormTextField";
 import * as Yup from "yup";
-import { Formik, Form } from "formik";
-import Select from "react-select";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 function CheckOut() {
   const { shoppingCart, calcSum } = useContext(ShoppingCartContext);
-  const [selectedGovernorate, setSelectedGovernorate] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
 
-  const handleRadioChange = (event) => {
-    setSelectedValue(event.target.value);
+  const handleRadioChange = (e) => {
+    setSelectedValue(e.target.value);
   };
-
-  const options = [
-    { value: "alex", label: "Alexandria" },
-    { value: "cairo", label: "Cairo" },
-  ];
 
   const validationSchema = Yup.object().shape({
     fname: Yup.string().required("Enter your First name"),
     lname: Yup.string().required("Enter your Last name"),
     address: Yup.string().required("Enter your Address"),
     city: Yup.string().required("Enter your City"),
-    gov: Yup.string().required("Choose your Governorate"),
-    poscode: Yup.string().required("Enter Postal Code"),
+    gov: Yup.string().required("Governorate is required"),
+    psc: Yup.string().required("Enter Postal Code"),
     phone: Yup.string().required("Enter your Phone Number"),
   });
 
@@ -53,11 +46,11 @@ function CheckOut() {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
@@ -70,11 +63,11 @@ function CheckOut() {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M9 5l7 7-7 7"
                 />
               </svg>
@@ -128,7 +121,20 @@ function CheckOut() {
               Complete your order by providing your payment details.
             </p>
             <Formik
-              initialValues={{ fname: "", lname: "", address: "", city: "" }}
+              validate={(values) => {
+                const errors = {};
+                if (!values.gov) {
+                  errors.gov = "Governorate is required";
+                }
+                return errors;
+              }}
+              initialValues={{
+                fname: "",
+                lname: "",
+                address: "",
+                city: "",
+                gov: "",
+              }}
               validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
@@ -137,7 +143,7 @@ function CheckOut() {
                 }, 400);
               }}
             >
-              {({ isSubmitting }) => (
+              {({ isSubmitting, values, setFieldValue, errors, touched }) => (
                 <Form>
                   <div className="flex flex-row">
                     <FormTextField
@@ -159,23 +165,94 @@ function CheckOut() {
                     placeholder="Address"
                     styling="mt-3"
                   />
-                  <div className="flex ">
+                  <div className="flex flex-row ">
                     <FormTextField
                       type="city"
                       name="city"
                       placeholder="City"
-                      styling="mt-3"
+                      styling="mt-2 w-1/2"
                     />
-                    <div className="ml-2 translate-y-7">
-                      <Select placeholder="Governorate" options={options} />
-                    </div>
-                    <div className="ml-2 translate-y-3">
+                    <FormTextField
+                      type="psc"
+                      name="psc"
+                      placeholder="Postal Code"
+                      styling="ml-2 translate-y-2 w-1/2"
+                    />
+                  </div>
+                  <FormTextField
+                    type="phone"
+                    name="phone"
+                    placeholder="Phone Number"
+                  />
+                  <div className="mt-5 mb-2">
+                    <h1 className="font-bold text-3xl">Payment</h1>
+                  </div>
+                  <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                    <Field
+                      type="radio"
+                      id="cards"
+                      name="radio"
+                      value="cards"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600"
+                    />
+                    <label
+                      for="cards"
+                      className="w-full py-4 ms-2 text-sm font-medium"
+                    >
+                      Pay with Credit/Debit Card
+                    </label>
+                  </div>
+                  <div className={values.radio === "cards" ? "flex" : "hidden"}>
+                    <div className="relative w-7/12 flex-shrink-0">
                       <FormTextField
-                        type="psc"
-                        name="psc"
-                        placeholder="Postal Code"
+                        type="text"
+                        id="card-no"
+                        name="card-no"
+                        styling="mt-2 w-full rounded-md  px-2 py-3 pl-11 text-sm  outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="xxxx-xxxx-xxxx-xxxx"
                       />
+                      <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+                        <svg
+                          className="mt-2 h-4 w-4 text-gray-400"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="10"
+                          height="16"
+                          fill="currentColor"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M11 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1z" />
+                          <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm13 2v5H1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm-1 9H2a1 1 0 0 1-1-1v-1h14v1a1 1 0 0 1-1 1z" />
+                        </svg>
+                      </div>
                     </div>
+                    <FormTextField
+                      type="text"
+                      name="credit-expiry"
+                      styling="mt-2 rounded-md px-2 py-3 text-sm  outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                      placeholder="MM/YY"
+                    />
+                    <FormTextField
+                      type="password"
+                      name="credit-cvc"
+                      styling="mt-2 w-1/6 flex-shrink-0 rounded-md px-2 py-3 text-sm  outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                      placeholder="CVC"
+                    />
+                  </div>
+                  <div className="mt-2 flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                    <Field
+                      type="radio"
+                      value="cod"
+                      name="radio"
+                      // onChange={handleRadioChange}
+                      // checked={selectedValue === "cod"}
+                      // styling="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600"
+                    />
+                    <label
+                      for="cards"
+                      className="w-full py-4 ms-2 text-sm font-medium"
+                    >
+                      Cash on Delivery (CoD)
+                    </label>
                   </div>
                 </Form>
               )}

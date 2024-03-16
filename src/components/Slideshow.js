@@ -36,7 +36,7 @@ const Slideshow = () => {
     },
   ];
   return (
-    <div className="carousel">
+    <div className="carousel ">
       <div>
         <div className="carousel-content">
           <span>discover</span>
@@ -58,7 +58,6 @@ const Slideshow = () => {
         slidesPerView={1}
         effect={"coverflow"}
         grabCursor={true}
-        centeredSlides={true}
         coverflowEffect={{
           rotate: 0,
           stretch: 0,
@@ -69,7 +68,7 @@ const Slideshow = () => {
         loop={true}
         pagination={{ clickable: true }}
         autoplay={{
-          delay: 1000,
+          delay: 3000,
           disableOnInteraction: false,
         }}
         breakpoints={{

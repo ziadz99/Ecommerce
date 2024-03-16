@@ -25,9 +25,9 @@ function Body() {
 
   return (
     <div>
-      <div className="md:flex">
-        <div className="mx-10 py-8 md:max-w-none w-full">
-          <h2 className="text-2xl font-bold text-gray-900 mb-5">Collections</h2>
+      <div className="md:flex dark:bg-black">
+        <div className="mx-10 py-8 grid sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-1">
+          <h2 className="text-2xl font-bold text-white mb-5">Collections</h2>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:gird-cols-3 lg:grid-cols-2 gap-4 ">
             {callouts.map((callout) => (
               <Link
@@ -40,15 +40,11 @@ function Body() {
                     <img
                       src={callout.imageSrc}
                       alt={callout.imageAlt}
-                      class="w-full  hover:opacity-75 transition-transform transform origin-center hover:scale-110"
+                      class="w-full  hover:opacity-75 transition-transform transform origin-center hover:scale-110 rounded-md"
                     />
                   </div>
                   <div>
-                    <h3 className="mt-6 font-bold text-lg text-gray-500 ml-5">
-                      <p />
-                      {callout.name}
-                    </h3>
-                    <p className="text-base font-semibold text-gray-900 ml-5">
+                    <p className="text-base font-semibold text-white ml-5 mt-2">
                       {callout.description}
                     </p>
                   </div>

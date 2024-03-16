@@ -9,6 +9,7 @@ export const AccountProvider = ({ children }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [token, setToken] = useState(false);
 
   const [fname, setfName] = useState("");
@@ -29,24 +30,33 @@ export const AccountProvider = ({ children }) => {
     }
   }, [token]);
 
-  const signIn = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = {
+      email: email,
+      password: password,
+    };
+
     try {
-      const { data } = await supabase
-        .from("profiles")
-        .select("id, username, avatar_url, website");
-      const { error } = await supabase.auth.signIn({ email });
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("id, username, avatar_url, website");
-      if (error) {
-        console.error("Login error:", error.message);
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Login successful, handle the response accordingly
+        console.log("Login successful");
       } else {
-        console.log("Login successful:", data);
-        setToken(data);
+        // Login failed, handle the response accordingly
+        setError("Invalid email or password");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error logging in:", error);
+      setError("An error occurred. Please try again later.");
     }
   };
 
@@ -105,6 +115,8 @@ export const AccountProvider = ({ children }) => {
     handleSignOut,
     fname,
     lname,
+    handleSubmit,
+    error,
   };
 
   return (

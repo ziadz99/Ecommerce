@@ -5,10 +5,10 @@ import Body from "./Body";
 export const Home = () => {
   return (
     <>
-      <div className="mt-20">
+      <div className="">
         <Slideshow />
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-row ">
         <Body />
       </div>
       <div className="mt-10">

@@ -22,7 +22,7 @@ export const Navbar = () => {
     //TODO: Fix Nav Bar
   }, [token]);
   return (
-    <nav className="bg-white dark:bg-gray-900  w-full  top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+    <nav className="bg-black   w-full  top-0 left-0 border-b border-gray-200 dark:border-gray-600">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link className="flex items-center">
           <img
@@ -57,7 +57,7 @@ export const Navbar = () => {
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-sticky"
         >
-          <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className="flex flex-col p-2 md:p-0 mt-4 font-medium border  rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 ">
             <li>
               <Link
                 to="/"

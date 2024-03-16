@@ -13,10 +13,26 @@
   padding-block: min(20vh, 3rem);
 }
 
-@media screen and (min-width: 48rem) {
+@media screen and (min-width: 768px) {
   .carousel {
     display: flex;
     align-items: center;
+  }
+}
+
+/* Media query for small devices */
+@media only screen and (max-width: 767px) {
+  .carousel-content h1 {
+    font-size: 0.5rem; /* Adjust font size for smaller screens */
+    line-height: 1; /* Adjust line height for smaller screens if necessary */
+  }
+}
+
+/* Media query for medium devices */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .carousel-content h1 {
+    font-size: 2.5rem; /* Adjust font size for medium screens */
+    line-height: 1.2; /* Adjust line height for medium screens if necessary */
   }
 }
 
@@ -75,7 +91,7 @@
 }
 
 .myswiper-slider {
-  width: 18.75rem;
+  width: 30rem;
   height: 28.175rem;
   background-size: "cover";
   background-position: "center";

@@ -5,18 +5,65 @@ import { ShoppingCartContext } from "../context/ShoppingCartContext";
 import FormTextField from "./FormTextField";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { AccountContext } from "../context/AccountContext";
 
 function CheckOut() {
   const { shoppingCart, calcSum } = useContext(ShoppingCartContext);
-  const [selectedValue, setSelectedValue] = useState("");
+  const { token } = useContext(AccountContext);
 
-  const handleRadioChange = (e) => {
-    setSelectedValue(e.target.value);
-  };
+  function isValidCardNumber(cardNumber) {
+    // Remove any spaces or dashes from the card number
+    cardNumber = cardNumber.replace(/\s+/g, "").replace(/-/g, "");
+
+    let sum = 0;
+    let doubleUp = false;
+    for (let i = cardNumber.length - 1; i >= 0; i--) {
+      let digit = parseInt(cardNumber.charAt(i), 10);
+      if (doubleUp) {
+        digit *= 2;
+        if (digit > 9) {
+          digit -= 9;
+        }
+      }
+      sum += digit;
+      doubleUp = !doubleUp;
+    }
+    return sum % 10 === 0;
+  }
+
+  // Validate expiration date (assuming expirationDate is in MM/YY format)
+  function isValidExpirationDate(expirationDate) {
+    const today = new Date();
+    const currentMonth = today.getMonth() + 1;
+    const currentYear = today.getFullYear() % 100;
+
+    const [inputMonth, inputYear] = expirationDate.split("/");
+    const expMonth = parseInt(inputMonth, 10);
+    const expYear = parseInt(inputYear, 10);
+
+    return (
+      expMonth >= 1 &&
+      expMonth <= 12 &&
+      expYear >= currentYear &&
+      (expYear > currentYear || expMonth >= currentMonth)
+    );
+  }
+
+  // Validate CVV (3 or 4 digits)
+  function isValidCVV(cvv) {
+    const cvvRegex = /^[0-9]{3}$/;
+    return cvvRegex.test(cvv);
+  }
 
   const validationSchema = Yup.object().shape({
-    fname: Yup.string().required("Enter your First name"),
-    lname: Yup.string().required("Enter your Last name"),
+    fname: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Enter your First name"),
+    lname: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Enter your Last name"),
     address: Yup.string().required("Enter your Address"),
     city: Yup.string().required("Enter your City"),
     gov: Yup.string().required("Governorate is required"),
@@ -25,7 +72,10 @@ function CheckOut() {
   });
 
   const handleForm = () => {
-    //
+    if (token) {
+    } else {
+      alert("Please Login First");
+    }
   };
 
   return (
@@ -121,13 +171,6 @@ function CheckOut() {
               Complete your order by providing your payment details.
             </p>
             <Formik
-              validate={(values) => {
-                const errors = {};
-                if (!values.gov) {
-                  errors.gov = "Governorate is required";
-                }
-                return errors;
-              }}
               initialValues={{
                 fname: "",
                 lname: "",
@@ -205,9 +248,11 @@ function CheckOut() {
                   <div className={values.radio === "cards" ? "flex" : "hidden"}>
                     <div className="relative w-7/12 flex-shrink-0">
                       <FormTextField
+                        maxLength={16}
                         type="text"
                         id="card-no"
                         name="card-no"
+                        autocomplete="cc-csc"
                         styling="mt-2 w-full rounded-md  px-2 py-3 pl-11 text-sm  outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                         placeholder="xxxx-xxxx-xxxx-xxxx"
                       />
@@ -227,6 +272,7 @@ function CheckOut() {
                     </div>
                     <FormTextField
                       type="text"
+                      maxLength={5}
                       name="credit-expiry"
                       styling="mt-2 rounded-md px-2 py-3 text-sm  outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                       placeholder="MM/YY"
@@ -234,6 +280,7 @@ function CheckOut() {
                     <FormTextField
                       type="password"
                       name="credit-cvc"
+                      maxLength={3}
                       styling="mt-2 w-1/6 flex-shrink-0 rounded-md px-2 py-3 text-sm  outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                       placeholder="CVC"
                     />
@@ -275,7 +322,10 @@ function CheckOut() {
                 {calcSum(shoppingCart) + 25}EGP
               </p>
             </div>
-            <button className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
+            <button
+              onClick={handleForm}
+              className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
+            >
               Place Order
             </button>
           </div>

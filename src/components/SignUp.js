@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { supabase } from "./Client";
+import { Footer } from "./Footer";
+import * as Yup from "yup";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import FormTextField from "./FormTextField";
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -7,7 +11,22 @@ function SignUp() {
     lname: "",
     email: "",
     password: "",
-    address: "",
+  });
+
+  const validationSchema = Yup.object().shape({
+    fname: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Enter your First name"),
+    lname: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Enter your Last name"),
+    email: Yup.string().required("Enter your E-mail"),
+    password: Yup.string()
+      .required("No password provided.")
+      .min(8, "Password is too short - should be 8 chars minimum.")
+      .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
   });
 
   async function handleSubmit(event) {
@@ -20,7 +39,6 @@ function SignUp() {
           data: {
             fname: formData.fname,
             lname: formData.lname,
-            address: formData.address,
           },
         },
       });
@@ -33,95 +51,87 @@ function SignUp() {
     }
   }
 
-  function handleChange(event) {
-    setFormData((prevFormData) => {
-      return {
-        ...prevFormData,
-        [event.target.name]: event.target.value,
-      };
-    });
-  }
+  const validate = (
+    values,
+    props /* only available when using withFormik */
+  ) => {
+    const errors = {};
+
+    if (!values.email) {
+      errors.email = "Required";
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+      errors.email = "Invalid email address";
+    }
+
+    //...
+
+    return errors;
+  };
 
   return (
-    <section>
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 mt-4">
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Create your account
-            </h1>
-            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-              <div>
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    First Name
-                  </label>
-                  <input
-                    name="fname"
-                    onChange={handleChange}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    required=""
-                  ></input>
-                </div>
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">
-                    Last Name
-                  </label>
-                  <input
-                    name="lname"
-                    onChange={handleChange}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    required=""
-                  ></input>
-                </div>
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">
-                    Email
-                  </label>
-                  <input
-                    name="email"
-                    type="email"
-                    onChange={handleChange}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="name@company.com"
-                    required=""
-                  ></input>
-                </div>
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">
-                    Password
-                  </label>
-                  <input
-                    onChange={handleChange}
-                    type="password"
-                    placeholder="••••••••"
-                    name="password"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    required=""
-                  ></input>
-                </div>
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">
-                    Address
-                  </label>
-                  <input
-                    onChange={handleChange}
-                    name="address"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    required=""
-                  ></input>
-                </div>
-                <div>
-                  <button className="w-full text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 mt-6">
-                    Sign up
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
+    <>
+      <div>
+        <Formik
+          initialValues={{
+            fname: "",
+            lname: "",
+            email: "",
+            address: "",
+          }}
+          validationSchema={validationSchema}
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+              alert(JSON.stringify(values, null, 2));
+              setSubmitting(false);
+            }, 400);
+          }}
+        >
+          {({ isSubmitting, values, setFieldValue, errors, touched }) => (
+            <Form onSubmit={handleSubmit}>
+              <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-black mb-5 mt-5 ml-5">
+                Create your account
+              </h1>
+              <FormTextField
+                type="fname"
+                name="fname"
+                placeholder="First Name"
+                styling="text-sm sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full sm:w-1/2 lg:w-1/4 p-2.5 text-black"
+              />
+              <FormTextField
+                type="lname"
+                name="lname"
+                placeholder="Last Name"
+                styling="text-sm sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full sm:w-1/2 lg:w-1/4 p-2.5 text-black"
+              />
+
+              <FormTextField
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                validate={validate}
+                styling="text-sm sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full sm:w-1/2 lg:w-1/4 p-2.5 text-black"
+              />
+
+              <FormTextField
+                type="password"
+                name="psw"
+                placeholder="Password"
+                styling="text-sm sm:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full sm:w-1/2 lg:w-1/4 p-2.5 text-black"
+              />
+            </Form>
+          )}
+        </Formik>
+        <button
+          onClick={handleSubmit}
+          className=" mt-10 bg-black hover:bg-white text-white font-semibold hover:text-black py-2 px-24 border border-black hover:border-black rounded mb-10 ml-5"
+        >
+          CREATE ACCOUNT
+        </button>
       </div>
-    </section>
+      <Footer />
+    </>
   );
 }
 

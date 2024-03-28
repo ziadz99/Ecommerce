@@ -6,6 +6,7 @@ import { useState } from "react";
 import Sidebar from "./Sidebar";
 import ProductCard from "./ProductCard";
 import ViewAsButton from "./ViewAsButton";
+import SquareLoadingSkeleton from "./SquareLoadingSkeleton ";
 
 function Products() {
   // Usage in your component
@@ -14,6 +15,7 @@ function Products() {
   const [clothes, setClothes] = useState(null);
   const [filteredClothes, setFilteredClothes] = useState(null);
   const [numCols, setNumCols] = useState(2);
+  const [loading, setLoading] = useState(true);
 
   const [page, setPage] = useState(null);
 
@@ -27,11 +29,15 @@ function Products() {
       console.log(error);
     }
 
-    if (data) {
-      setClothes(data);
-      setFilteredClothes(data);
-      setFetchError(null);
-    }
+    setTimeout(() => {
+      // Set data and mark loading as false
+      if (data) {
+        setClothes(data);
+        setFilteredClothes(data);
+        setFetchError(null);
+      }
+      setLoading(false);
+    }, 2000); // Simulate 2 seconds loading time
   }, [data, error]);
 
   //checking conditions for cols
@@ -45,10 +51,6 @@ function Products() {
 
   const threeCols = () => {
     setNumCols(3);
-  };
-
-  const foureCols = () => {
-    setNumCols(4);
   };
 
   //dispatch function depends on which page we are in
@@ -66,7 +68,7 @@ function Products() {
 
   return (
     <div className="mt-5">
-      {clothes && (
+      {clothes ? (
         <div className="mx-auto max-w-2xl px-4 py-16  lg:max-w-7xl lg:px-8">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-8 text-center border-b border-white-500">
             {page === "Men" ? "Men's Collection" : "Women's Collection"}
@@ -81,11 +83,7 @@ function Products() {
             </div>
             <div className="lg:col-span-2 sm:col-span-1">
               <div className="mb-5 hidden lg:block">
-                <ViewAsButton
-                  twoCols={twoCols}
-                  threeCols={threeCols}
-                  fourCols={foureCols}
-                />
+                <ViewAsButton twoCols={twoCols} threeCols={threeCols} />
               </div>
               <div className={`grid lg:grid-cols-${numCols} gap-x-8 gap-y-3`}>
                 {filteredClothes.map((product, index) => (
@@ -95,6 +93,8 @@ function Products() {
             </div>
           </div>
         </div>
+      ) : (
+        <SquareLoadingSkeleton count={5} size={50} /> // Render skeleton loader while clothes data is loading
       )}
     </div>
   );

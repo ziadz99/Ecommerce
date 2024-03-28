@@ -102,7 +102,11 @@ function Login() {
                       Forgot your Password?
                     </Link>
                   </div>
-                  <Link class="bg-black hover:bg-white text-white font-semibold hover:text-black py-2 px-24 border border-black hover:border-black rounded">
+                  <Link
+                    to="/SignUp"
+                    // onClick={setMenuOpen(false)}
+                    className="bg-black hover:bg-white text-white font-semibold hover:text-black py-2 px-24 border border-black hover:border-black rounded"
+                  >
                     CREATE ACCOUNT
                   </Link>
                 </div>

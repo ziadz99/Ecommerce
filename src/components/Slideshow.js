@@ -55,8 +55,8 @@ const Slideshow = () => {
         className="myswiper"
         modules={[Pagination, EffectCoverflow, Autoplay, Navigation]}
         direction="horizontal"
-        slidesPerView={1}
-        effect={"coverflow"}
+        slidesPerView={3}
+        effect="coverflow"
         grabCursor={true}
         coverflowEffect={{
           rotate: 0,
@@ -89,9 +89,9 @@ const Slideshow = () => {
         {slides.map((data, index) => (
           <SwiperSlide
             key={index}
-            style={{ backgroundImage: `url(${data.src})` }}
             className="myswiper-slider"
-          ></SwiperSlide>
+            style={{ backgroundImage: `url(${data.src})` }}
+          />
         ))}
       </Swiper>
     </div>

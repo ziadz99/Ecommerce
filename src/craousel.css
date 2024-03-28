@@ -85,16 +85,19 @@
   border: 0.125rem solid #00a4aa;
 }
 
+/* Style the Swiper container */
 .myswiper {
   width: 100%;
-  padding-top: 3.125rem;
+  height: 600px; /* Increase the height as desired */
+  /* padding-top: 3.125rem; */
 }
 
+/* Style the individual slides */
 .myswiper-slider {
-  width: 30rem;
-  height: 28.175rem;
-  background-size: "cover";
-  background-position: "center";
+  width: 100%;
+  height: auto;
+  background-size: cover; /* Remove quotes around "cover" */
+  background-position: center; /* Remove quotes around "center" */
 }
 
 .myswiper-slider div {

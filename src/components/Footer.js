@@ -2,10 +2,10 @@ import React from "react";
 
 export const Footer = () => {
   return (
-    <footer className="bg-white shadow dark:bg-gray-900 m-4">
-      <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
-        <div className="grid grid-cols-4">
-          <div>
+    <footer className="bg-white shadow dark:bg-gray-900 m-4 bottom-0">
+      <div className="max-w-screen-xl mx-auto md:py-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="justify-start">
             <h2 className="text-white relative m-auto uppercase font-bold">
               Customer Services
             </h2>

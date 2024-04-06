@@ -22,15 +22,15 @@ export const Navbar = () => {
     //TODO: Fix Nav Bar
   }, [token]);
   return (
-    <nav className="bg-black   w-full  top-0 left-0 border-b border-gray-200 dark:border-gray-600">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <nav className="bg-white w-full  top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <Link className="flex items-center">
           <img
             src="https://flowbite.com/docs/images/logo.svg"
             className="h-8 mr-3"
             alt="Flowbite Logo"
           />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center text-2xl font-semibold whitespace-nowrap text-black">
             E-Commerce
           </span>
         </Link>
@@ -53,15 +53,12 @@ export const Navbar = () => {
             </div>
           </div>
         </>
-        <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-          id="navbar-sticky"
-        >
+        <div className="items-center justify-between w-full md:flex md:w-auto md:order-1">
           <ul className="flex flex-col p-2 md:p-0 mt-4 font-medium border  rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 ">
             <li>
               <Link
                 to="/"
-                className="block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white focus:font-bold focus:md:text-blue-700"
+                className="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:bg-transparent md:text-black-700 md:hover:text-blue-500 md:hover:bg-transparent md:p-0 text-black focus:font-bold focus:text-blue-700 md:focus:text-blue-700"
               >
                 Home
               </Link>
@@ -69,7 +66,7 @@ export const Navbar = () => {
             <li>
               <Link
                 to="/About"
-                className="block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white focus:font-bold focus:md:text-blue-700"
+                className="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:bg-transparent md:text-black-700 md:hover:text-blue-500 md:hover:bg-transparent md:p-0 text-black focus:font-bold focus:text-blue-700 md:focus:text-blue-700"
               >
                 About
               </Link>
@@ -77,7 +74,7 @@ export const Navbar = () => {
             <li>
               <Link
                 to="/Contact"
-                className="block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white focus:font-bold focus:md:text-blue-700"
+                className="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:bg-transparent md:text-black-700 md:hover:text-blue-500 md:hover:bg-transparent md:p-0 text-black focus:font-bold focus:text-blue-700 md:focus:text-blue-700"
               >
                 Contact
               </Link>

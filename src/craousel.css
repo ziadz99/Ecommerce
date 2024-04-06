@@ -7,16 +7,36 @@
 
 .carousel {
   position: relative;
-  width: calc(min(90rem, 90%));
-  margin: 0 auto;
-  column-gap: 3rem;
+  width: calc(min(90rem, 90%)); /* Reduced width */
+  margin-left: 0; /* Align elements to the left */
   padding-block: min(20vh, 3rem);
+  column-gap: 3rem;
+  padding-left: 20px; /* Adjust as needed */
+  margin-bottom: 10;
 }
 
+/* Media Query for smaller screens */
 @media screen and (min-width: 768px) {
   .carousel {
     display: flex;
     align-items: center;
+    width: calc(min(90vw, 90%));
+    padding-block: min(15vh, 2rem);
+    column-gap: 2rem;
+    padding-left: 10px; /* Adjust as needed */
+    margin-bottom: 10;
+  }
+}
+
+/* Media Query for even smaller screens */
+@media screen and (max-width: 480px) {
+  .carousel {
+    align-items: center;
+    width: 100%; /* Full width */
+    padding-block: 0; /* No padding */
+    padding-left: 0; /* No padding */
+    column-gap: 0; /* No column gap */
+    margin-bottom: 10;
   }
 }
 
@@ -55,6 +75,20 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* Media Query for smaller screens */
+@media screen and (max-width: 768px) {
+  .carousel-content h1 {
+    font-size: 3rem; /* Decrease font size for smaller screens */
+  }
+}
+
+/* Media Query for even smaller screens */
+@media screen and (max-width: 480px) {
+  .carousel-content h1 {
+    font-size: 2.5rem; /* Further decrease font size for even smaller screens */
+  }
+}
+
 .carousel-content hr {
   display: block;
   background: #00a4aa;
@@ -62,6 +96,22 @@
   width: 6.25rem;
   border: none;
   margin: 1.125rem 0 1.875rem 0;
+}
+
+/* Media Query for smaller screens */
+@media screen and (max-width: 768px) {
+  .carousel-content hr {
+    width: 4rem; /* Adjust width for smaller screens */
+    margin: 1rem 0 1.5rem 0; /* Adjust margin for smaller screens */
+  }
+}
+
+/* Media Query for even smaller screens */
+@media screen and (max-width: 480px) {
+  .carousel-content hr {
+    width: 3rem; /* Further adjust width for even smaller screens */
+    margin: 0.75rem 0 1rem 0; /* Further adjust margin for even smaller screens */
+  }
 }
 
 .carousel-content p {
@@ -81,6 +131,27 @@
   transition: 0.3s ease-in-out;
 }
 
+/* Media Query for smaller screens */
+@media screen and (max-width: 768px) {
+  .slider-btn {
+    padding: 0.5rem 1.5rem; /* Adjust padding for smaller screens */
+    margin-top: 1.5rem; /* Adjust margin-top for smaller screens */
+    border-width: 1.5px; /* Adjust border width for smaller screens */
+    border-radius: 2.5rem; /* Adjust border radius for smaller screens */
+  }
+}
+
+/* Media Query for even smaller screens */
+@media screen and (max-width: 480px) {
+  .slider-btn {
+    padding: 0.4rem 1.25rem; /* Further adjust padding for even smaller screens */
+    margin-top: 1rem; /* Further adjust margin-top for even smaller screens */
+    border-width: 1px; /* Further adjust border width for even smaller screens */
+    border-radius: 2rem; /* Further adjust border radius for even smaller screens */
+    margin-bottom: 10px;
+  }
+}
+
 .slider-btn:hover {
   border: 0.125rem solid #00a4aa;
 }
@@ -88,22 +159,50 @@
 /* Style the Swiper container */
 .myswiper {
   width: 100%;
-  height: 600px; /* Increase the height as desired */
+  height: 500px; /* Increase the height as desired */
   /* padding-top: 3.125rem; */
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .myswiper {
+    height: 400px; /* Adjust height for smaller screens */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .myswiper {
+    height: 300px; /* Adjust height for even smaller screens */
+  }
 }
 
 /* Style the individual slides */
 .myswiper-slider {
   width: 100%;
-  height: auto;
-  background-size: cover; /* Remove quotes around "cover" */
-  background-position: center; /* Remove quotes around "center" */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Media Query for smaller screens */
+@media screen and (max-width: 768px) {
+  .myswiper-slider {
+    width: 90%; /* Adjust width for smaller screens */
+  }
+}
+
+/* Media Query for smaller screens */
+@media screen and (max-width: 480px) {
+  .myswiper-slider {
+    width: 100%; /* Adjust width for even smaller screens */
+    height: 20rem; /* Adjust height for even smaller screens */
+  }
 }
 
 .myswiper-slider div {
   display: none;
   opacity: 0;
-  padding-bottom: 0.625rem;
+  padding-bottom: 10px;
 }
 
 .swiper-slide-active div {
@@ -133,4 +232,9 @@
   font-style: normal;
   margin-bottom: 16px;
   margin-top: 20px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
 }

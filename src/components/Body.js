@@ -25,33 +25,31 @@ function Body() {
 
   return (
     <div>
-      <div className="md:flex dark:bg-black">
-        <div className="mx-10 py-8 grid sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-1">
-          <h2 className="text-2xl font-bold text-white mb-5">Collections</h2>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:gird-cols-3 lg:grid-cols-2 gap-4 ">
-            {callouts.map((callout) => (
-              <Link
-                to={`/products?name=${callout.name}`}
-                key={callout.name}
-                className="group relative"
-              >
-                <div className="grid-item ">
-                  <div className="overflow-hidden">
-                    <img
-                      src={callout.imageSrc}
-                      alt={callout.imageAlt}
-                      class="w-full  hover:opacity-75 transition-transform transform origin-center hover:scale-110 rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-base font-semibold text-white ml-5 mt-2">
-                      {callout.description}
-                    </p>
-                  </div>
+      <div className="dark:bg-black">
+        <h2 className="text-2xl font-bold text-white mb-5 mt-5">Collections</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+          {callouts.map((callout) => (
+            <Link
+              to={`/products?name=${callout.name}`}
+              key={callout.name}
+              className="group relative"
+            >
+              <div className="lg:col-span-2 sm:col-span-1 xl:col-span-2 lg:w-full sm:w-1/2 xl:w-full">
+                <div className="overflow-hidden">
+                  <img
+                    src={callout.imageSrc}
+                    alt={callout.imageAlt}
+                    className="hover:opacity-75 transition-transform transform origin-center hover:scale-110 rounded-md"
+                  />
                 </div>
-              </Link>
-            ))}
-          </div>
+                <div>
+                  <p className="text-base font-semibold text-white ml-5 mt-2">
+                    {callout.description}
+                  </p>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
       <div className="ml-7 mr-7">

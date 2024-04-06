@@ -75,7 +75,7 @@ const Cart = ({ children }) => {
         }`}
       >
         <button
-          className="text-white focus:outline-none text-3xl hover:text-blue-500"
+          className="text-black focus:outline-none text-3xl hover:text-blue-500"
           onClick={toggleMenu}
         >
           <FiShoppingCart />
@@ -97,7 +97,7 @@ const Cart = ({ children }) => {
             ></div>
             <div
               ref={offCanvasRef}
-              className="fixed inset-y-0 right-0 overflow-y-scroll w-96 z-50 bg-white p-4 shadow-md"
+              className="fixed inset-y-0 right-0 overflow-y-scroll w-96 sm:w-80 z-50 bg-white p-4 shadow-md"
               // className='fixed inset-y-0 right-0 w-96 z-50 bg-white p-4 shadow-md'
             >
               <h3 className="text-2xl font-semibold mb-4">Shopping Cart</h3>

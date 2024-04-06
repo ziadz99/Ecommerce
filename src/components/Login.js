@@ -40,7 +40,7 @@ function Login() {
     <>
       <CgProfile
         onClick={toggleMenu}
-        className="text-white text-4xl hover:text-blue-700"
+        className="text-black text-4xl hover:text-blue-700"
       />
       <form
         onSubmit={handleLogin}
@@ -64,9 +64,19 @@ function Login() {
                 </div>
                 <div
                   ref={offCanvasRef}
-                  className="fixed inset-y-0 right-0 w-96 z-50 bg-white p-4 shadow-md"
+                  className="fixed inset-y-0 right-0 w-full sm:w-80 z-50 bg-white p-4 shadow-md"
                 >
-                  <h3 className="text-2xl font-semibold mb-4">Login</h3>
+                  <div className="flex flex-row">
+                    <h3 className="text-2xl md:text-xl sm:text-lg font-semibold mb-4">
+                      Login
+                    </h3>
+                    <button
+                      onClick={toggleMenu}
+                      className="absolute top-0 right-0 mt-1 mr-4"
+                    >
+                      X
+                    </button>
+                  </div>
                   <div>
                     <label className="block mb-2 text-lg font-medium text-gray-900 dark:text-black">
                       Email Address
@@ -93,19 +103,19 @@ function Login() {
                     ></input>
                   </div>
                   <div className="flex justify-center items-center mt-3">
-                    <button className="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-36 border border-black hover:border-transparent rounded">
+                    <button className="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 sm:px-8 md:px-12 lg:px-16 xl:px-20 border border-black hover:border-transparent rounded">
                       LOG IN
                     </button>
                   </div>
                   <div className="flex justify-center items-center mt-3 mb-3">
-                    <Link className="text-md font-medium text-primary-600 hover:underline dark:text-primary-500 text-black-500">
+                    <Link className="text-sm sm:text-md md:text-lg font-medium text-primary-600 hover:underline dark:text-primary-500 text-black-500">
                       Forgot your Password?
                     </Link>
                   </div>
                   <Link
                     to="/SignUp"
                     // onClick={setMenuOpen(false)}
-                    className="bg-black hover:bg-white text-white font-semibold hover:text-black py-2 px-24 border border-black hover:border-black rounded"
+                    className="block w-full text-center bg-black hover:bg-white text-white font-semibold hover:text-black py-2 sm:px-8 md:px-12 lg:px-16 xl:px-20 border border-black hover:border-black rounded"
                   >
                     CREATE ACCOUNT
                   </Link>

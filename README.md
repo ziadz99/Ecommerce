@@ -15,7 +15,7 @@ Welcome to the E-commerce Clothes Store project! This repository contains the so
 
 ## About the Project
 
-This project is a fully functional e-commerce website designed to provide an intuitive, functional, and responsive user interface. The goal is to deliver an optimal user experience for shopping for clothes online.
+This project is a fully functional e-commerce website Designed to provide an intuitive, functional, and responsive user interface. The goal is to deliver an optimal user experience for shopping for clothes online.
 
 ## Technologies Used
 
@@ -44,28 +44,28 @@ To get a local copy up and running, follow these steps:
 
 1. **Clone the repository:**
 
-   ```sh
+   ```
    git clone https://github.com/ziadSayed99/Ecommerce-Website.git
 Navigate to the project directory:
 
-sh
+
 Copy code
-cd Ecommerce-Website
+cd E-commerce-Website
 Install the dependencies:
 
-sh
+
 Copy code
 npm install
 Usage
 To run the development server, use the following command:
 
-sh
+
 Copy code
 npm start
 Open http://localhost:3000 in your browser to view the application.
 
 Contributing
-Contributions are what makes the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
+Contributions Are What makes the open-source community Such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
 Fork the Project
 Create your Feature Branch (git checkout -b feature/AmazingFeature)
